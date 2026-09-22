@@ -1,0 +1,27 @@
+name: "bra_il"
+version: "1.0.0"
+config-version: 2
+
+profile: "bra_il"
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Schema real no Postgres = o nome da pasta (staging/intermediate/marts),
+# não "<schema do target>_staging" (comportamento padrão do dbt) — ver
+# macros/get_custom_schema.sql.
+models:
+  bra_il:
+    staging:
+      +schema: staging
+      +materialized: view
+    intermediate:
+      +schema: intermediate
+      +materialized: view
+    marts:
+      +schema: marts
+      +materialized: table

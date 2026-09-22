@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: int_cambio_brl_cny_cross
+    description: >
+      BRL/CNY composto (BRL/USD do BC ÷ USD/CNY da Frankfurter) — ver ADR
+      0004. Não é 1:1 com uma única fonte, por isso não é staging.
+    columns:
+      - name: data
+        tests: [not_null, unique]
+      - name: cambio_brl_cny
+        description: Reais por yuan, calculado (não é cotação oficial direta).
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 50
+
+  - name: int_cambio_consolidado
+    description: As 3 moedas (USD, EUR, CNY) em formato longo.
+    columns:
+      - name: data
+        tests: [not_null]
+      - name: moeda
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["USD", "EUR", "CNY"]
+      - name: valor
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [data, moeda]
+
+  - name: int_juro_real_mensal
+    description: >
+      Juro real mensal (Selic meta convertida pro equivalente mensal via
+      Fisher, menos IPCA mensal). Ver comentário no SQL do modelo para a
+      premissa de alinhamento Selic x mês do IPCA.
+    columns:
+      - name: mes
+        description: Primeiro dia do mês de referência do IPCA.
+        tests: [not_null, unique]
+      - name: juro_real_mensal_pct
+        description: Juro real do mês, em %, via equação de Fisher.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -20
+                max_value: 20

@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: stg_selic_meta
+    description: Meta Selic definida pelo Copom, 1:1 com a fonte (série SGS 432).
+    columns:
+      - name: data
+        description: Data da observação (repete o último valor vigente todo dia útil).
+        tests: [not_null, unique]
+      - name: selic_meta_pct_aa
+        description: Selic meta, em % ao ano.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+
+  - name: stg_ipca_mensal
+    description: IPCA, variação mensal, 1:1 com a fonte (série SGS 433).
+    columns:
+      - name: data
+        description: Primeiro dia do mês de referência.
+        tests: [not_null, unique]
+      - name: ipca_mensal_pct
+        description: Variação mensal do IPCA, em %.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -10
+                max_value: 10
+
+  - name: stg_cambio_brl_usd
+    description: BRL/USD, PTAX venda, 1:1 com a fonte (série SGS 1).
+    columns:
+      - name: data
+        tests: [not_null, unique]
+      - name: cambio_brl_usd
+        description: Reais por dólar americano (PTAX venda).
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 50
+
+  - name: stg_cambio_brl_eur
+    description: BRL/EUR, PTAX venda, 1:1 com a fonte (série SGS 21619).
+    columns:
+      - name: data
+        tests: [not_null, unique]
+      - name: cambio_brl_eur
+        description: Reais por euro (PTAX venda).
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 50
+
+  - name: stg_cambio_usd_cny
+    description: >
+      USD/CNY, referência do BCE via Frankfurter API — não vem do Banco
+      Central (ver ADR 0004). Usado só pra compor BRL/CNY em intermediate.
+    columns:
+      - name: data
+        tests: [not_null, unique]
+      - name: cambio_usd_cny
+        description: Yuans por dólar americano (referência BCE).
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 20

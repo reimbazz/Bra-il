@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      Dado bruto gravado pelo job de ingestão (backend/), direto da API SGS
+      do Banco Central e da Frankfurter API (ver ADR 0004). Nenhuma
+      transformação de negócio acontece antes daqui.
+    schema: raw
+    tables:
+      - name: observacoes
+        description: Uma linha por (fonte, série, data observada).
+        columns:
+          - name: fonte
+            description: "'bcb_sgs' ou 'frankfurter' — de onde veio o dado bruto."
+          - name: serie
+            description: Nome lógico da série (ver backend/shared/series_codes.py).
+          - name: data
+            description: Data da observação.
+          - name: valor
+            description: Valor bruto; unidade depende da série (ver data dictionary).

@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: mart_indicadores_diarios
+    description: >
+      Tabela larga diária (Selic, IPCA, câmbio x3) pronta pro dashboard.
+      IPCA e câmbio ficam NULL nos dias em que não há dado novo publicado
+      (não é forward-filled de propósito).
+    columns:
+      - name: data
+        tests: [not_null, unique]
+
+  - name: mart_cambio_base100
+    description: As 3 moedas normalizadas à base 100 no primeiro dia disponível.
+    columns:
+      - name: data
+        tests: [not_null]
+      - name: moeda
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["USD", "EUR", "CNY"]
+      - name: valor_base100
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [data, moeda]
+
+  - name: mart_juro_real_vs_cambio
+    description: Juro real mensal ao lado do câmbio de fim de mês de cada moeda.
+    columns:
+      - name: mes
+        tests: [not_null, unique]
+      - name: juro_real_mensal_pct
+        tests: [not_null]

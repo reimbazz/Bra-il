@@ -1,0 +1,16 @@
+# Sem credencial literal, só env_var() (ver skill 03-data-preparation e
+# security). O adaptador dbt-postgres exige host/user/password/dbname
+# separados — não aceita uma connection string única como o psycopg2.
+bra_il:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DBT_PGHOST') }}"
+      port: 5432
+      user: "{{ env_var('DBT_PGUSER') }}"
+      password: "{{ env_var('DBT_PGPASSWORD') }}"
+      dbname: "{{ env_var('DBT_PGDATABASE') }}"
+      schema: "{{ env_var('DBT_PGSCHEMA', 'staging') }}"
+      sslmode: require
+      threads: 4
