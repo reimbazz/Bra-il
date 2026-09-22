@@ -1,0 +1,88 @@
+/* Design tokens — ver 01-business-understanding/adr e o plano do projeto
+   (seção Design/UX). Paleta categórica (séries de moeda) validada com o
+   script da skill dataviz — ver PALETTE.md nesta mesma pasta. */
+
+:root {
+  color-scheme: light;
+
+  /* chrome neutro (base validada da skill dataviz) */
+  --color-bg: #f9f9f7;
+  --color-surface: #fcfcfb;
+  --color-text-primary: #0b0b0b;
+  --color-text-secondary: #52514e;
+  --color-text-muted: #898781;
+  --color-border: rgba(11, 11, 11, 0.1);
+  --color-grid: #e1e0d9;
+  --color-axis: #c3c2b7;
+
+  /* identidade da marca — verde petróleo + dourado queimado */
+  --color-brand: #0f4a3f;
+  --color-brand-contrast: #ffffff;
+  --color-brand-hover: #0b3a31;
+  --color-accent: #a86b1f;
+
+  /* série categórica fixa por moeda — nunca ciclar, nunca trocar por filtro */
+  --color-series-usd: #2a78d6;
+  --color-series-eur: #eb6834;
+  --color-series-cny: #1baf7a;
+
+  /* status (não usado como cor de série) */
+  --color-status-good: #0ca30c;
+  --color-status-critical: #d03b3b;
+
+  --font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg: #0d0d0d;
+    --color-surface: #1a1a19;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #c3c2b7;
+    --color-text-muted: #898781;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-grid: #2c2c2a;
+    --color-axis: #383835;
+
+    --color-brand: #35a68a;
+    --color-brand-contrast: #06211c;
+    --color-brand-hover: #4bc0a2;
+    --color-accent: #d99a4e;
+
+    --color-series-usd: #3987e5;
+    --color-series-eur: #d95926;
+    --color-series-cny: #199e70;
+
+    --color-status-good: #0ca30c;
+    --color-status-critical: #e66767;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #0d0d0d;
+  --color-surface: #1a1a19;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #c3c2b7;
+  --color-text-muted: #898781;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-grid: #2c2c2a;
+  --color-axis: #383835;
+
+  --color-brand: #35a68a;
+  --color-brand-contrast: #06211c;
+  --color-brand-hover: #4bc0a2;
+  --color-accent: #d99a4e;
+
+  --color-series-usd: #3987e5;
+  --color-series-eur: #d95926;
+  --color-series-cny: #199e70;
+
+  --color-status-good: #0ca30c;
+  --color-status-critical: #e66767;
+}

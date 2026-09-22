@@ -1,0 +1,24 @@
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.stat-tile__label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.stat-tile__valor {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-variant-numeric: proportional-nums;
+}
+
+.stat-tile__unidade {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
