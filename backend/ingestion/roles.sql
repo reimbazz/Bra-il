@@ -34,6 +34,9 @@ CREATE ROLE api_readonly WITH LOGIN PASSWORD 'TROCAR_SENHA_API';
 
 -- O schema "marts" só existe depois do primeiro `dbt run` (fase 4) — rodar
 -- este bloco depois disso, não junto com o CREATE ROLE acima:
+-- O SELECT nas tabelas NÃO é concedido aqui: o dbt recria os marts a cada
+-- run (materialização "table") e o grant manual some junto. Quem concede é
+-- o próprio dbt, via `+grants` em dbt/dbt_project.yml. (Um ALTER DEFAULT
+-- PRIVILEGES rodado pela role owner também não cobriria: ele só vale para
+-- tabelas criadas pela owner, não pela dbt_transform.)
 GRANT USAGE ON SCHEMA marts TO api_readonly;
-GRANT SELECT ON ALL TABLES IN SCHEMA marts TO api_readonly;
-ALTER DEFAULT PRIVILEGES IN SCHEMA marts GRANT SELECT ON TABLES TO api_readonly;

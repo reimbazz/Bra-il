@@ -25,3 +25,8 @@ models:
     marts:
       +schema: marts
       +materialized: table
+      # Materialização "table" recria a tabela a cada `dbt run`, e o GRANT
+      # feito à mão em roles.sql some junto com a tabela antiga. O dbt
+      # reaplica este grant depois de cada build (ADR 0006).
+      +grants:
+        select: ["api_readonly"]
