@@ -22,3 +22,9 @@
   font-weight: 500;
   color: var(--color-text-secondary);
 }
+
+.stat-tile__descricao {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}

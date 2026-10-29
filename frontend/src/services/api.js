@@ -46,12 +46,12 @@ export function buscarCambioBase100({ moedas, dataInicio, dataFim } = {}) {
   });
 }
 
-/** GET /api/juro-real-vs-cambio — juro real mensal x câmbio de fim de mês. */
-export function buscarJuroRealVsCambio({ dataInicio, dataFim } = {}) {
-  return buscarJson("/juro-real-vs-cambio", { data_inicio: dataInicio, data_fim: dataFim });
+/** GET /api/juros-inflacao — Selic meta x IPCA acumulado em 12 meses. */
+export function buscarJurosInflacao({ dataInicio, dataFim } = {}) {
+  return buscarJson("/juros-inflacao", { data_inicio: dataInicio, data_fim: dataFim });
 }
 
-/** GET /api/correlacao — Pearson (juro real x câmbio) por moeda, calculado no banco. */
-export function buscarCorrelacao() {
-  return buscarJson("/correlacao", {});
+/** GET /api/poder-de-compra — índice de preços acumulado x câmbio de fim de mês. */
+export function buscarPoderDeCompra({ dataInicio, dataFim } = {}) {
+  return buscarJson("/poder-de-compra", { data_inicio: dataInicio, data_fim: dataFim });
 }

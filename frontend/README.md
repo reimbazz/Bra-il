@@ -5,14 +5,16 @@ produção, ver ADR 0005).
 
 ## Telas
 
-- **Visão Geral** (`/`) — stat tiles (Selic, IPCA, juro real, câmbio x3) + gráfico da Selic
+- **Visão Geral** (`/`) — stat tiles com descrição (Selic, IPCA 12 meses, juro real, câmbio x3) + gráfico da Selic
 - **Comparação de Moedas** (`/comparacao-moedas`) — USD/EUR/CNY em base 100
-- **Juro Real x Câmbio** (`/juro-real-x-cambio`) — dispersão (não linha do
-  tempo: juro real é % e câmbio é R$, escalas diferentes — dois eixos Y
-  seria o anti-padrão que a skill `dataviz` proíbe) + correlação de Pearson
-  por moeda (`GET /api/correlacao`)
-- **Metodologia** (`/metodologia`) — fontes, composição de BRL/CNY, fórmula
-  do juro real, aviso de correlação x causalidade
+- **Juros e Inflação** (`/juros-e-inflacao`) — Selic x IPCA acumulado em 12
+  meses (mesma unidade, % a.a., então dividem um eixo só) + juro real com
+  linha de referência no zero (`GET /api/juros-inflacao`)
+- **Poder de Compra** (`/poder-de-compra`) — quanto custa hoje o que custava
+  R$ 100 no mês escolhido, em preços (IPCA) e em cada moeda
+  (`GET /api/poder-de-compra`)
+- **Metodologia** (`/metodologia`) — caminho dos dados, fontes, glossário,
+  fórmulas com exemplo numérico e limites de interpretação
 
 ## Design
 

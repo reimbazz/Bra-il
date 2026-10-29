@@ -52,3 +52,17 @@ models:
               arguments:
                 min_value: -20
                 max_value: 20
+
+  - name: int_cambio_fim_de_mes
+    description: Última cotação de cada moeda dentro de cada mês (formato longo).
+    columns:
+      - name: mes
+        tests: [not_null]
+      - name: moeda
+        tests: [not_null]
+      - name: valor_fim_de_mes
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [mes, moeda]

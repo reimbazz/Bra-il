@@ -1,0 +1,61 @@
+.seletor-periodo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.seletor-periodo__presets {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.seletor-periodo__botao {
+  background: none;
+  border: none;
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.seletor-periodo__botao:last-child {
+  border-right: none;
+}
+
+.seletor-periodo__botao:hover {
+  color: var(--color-text-primary);
+}
+
+.seletor-periodo__botao--ativo,
+.seletor-periodo__botao--ativo:hover {
+  background: var(--color-brand);
+  color: var(--color-brand-contrast);
+}
+
+.seletor-periodo__datas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.seletor-periodo__datas label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.seletor-periodo__datas input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-primary);
+  font: inherit;
+  padding: 4px 8px;
+}

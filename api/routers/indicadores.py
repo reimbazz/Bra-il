@@ -5,7 +5,15 @@ from datetime import date
 from fastapi import APIRouter, Query
 
 from api.db import executar_query
-from api.schemas import CambioBase100, CorrelacaoMoeda, IndicadorDiario, JuroRealVsCambio, Moeda
+from api.schemas import (
+    CambioBase100,
+    CorrelacaoMoeda,
+    IndicadorDiario,
+    JuroRealVsCambio,
+    JurosInflacao,
+    Moeda,
+    PoderDeCompra,
+)
 
 router = APIRouter(prefix="/api")
 
@@ -91,6 +99,34 @@ def listar_juro_real_vs_cambio(
         tuple(parametros),
     )
     return [JuroRealVsCambio(**linha) for linha in linhas]
+
+
+@router.get("/juros-inflacao", response_model=list[JurosInflacao])
+def listar_juros_inflacao(
+    data_inicio: date | None = Query(default=None),
+    data_fim: date | None = Query(default=None),
+) -> list[JurosInflacao]:
+    """Selic meta x IPCA acumulado em 12 meses — alimenta a tela Juros e Inflação."""
+    where, parametros = _construir_filtro("mes", data_inicio, data_fim)
+    linhas = executar_query(
+        f"SELECT * FROM marts.mart_juros_inflacao{where} ORDER BY mes",
+        tuple(parametros),
+    )
+    return [JurosInflacao(**linha) for linha in linhas]
+
+
+@router.get("/poder-de-compra", response_model=list[PoderDeCompra])
+def listar_poder_de_compra(
+    data_inicio: date | None = Query(default=None),
+    data_fim: date | None = Query(default=None),
+) -> list[PoderDeCompra]:
+    """Índice de preços acumulado x câmbio de fim de mês — alimenta a tela Poder de Compra."""
+    where, parametros = _construir_filtro("mes", data_inicio, data_fim)
+    linhas = executar_query(
+        f"SELECT * FROM marts.mart_poder_de_compra{where} ORDER BY mes",
+        tuple(parametros),
+    )
+    return [PoderDeCompra(**linha) for linha in linhas]
 
 
 @router.get("/correlacao", response_model=list[CorrelacaoMoeda])

@@ -6,8 +6,14 @@ import "./Layout.css";
 const LINKS = [
   { to: "/", rotulo: "Visão Geral", fim: true },
   { to: "/comparacao-moedas", rotulo: "Comparação de Moedas" },
-  { to: "/juro-real-x-cambio", rotulo: "Juro Real x Câmbio" },
+  { to: "/juros-e-inflacao", rotulo: "Juros e Inflação" },
+  { to: "/poder-de-compra", rotulo: "Poder de Compra" },
   { to: "/metodologia", rotulo: "Metodologia" },
+];
+
+const REDES = [
+  { rotulo: "LinkedIn", url: "https://www.linkedin.com/in/pedro-reimberg-de-oliveira/" },
+  { rotulo: "GitHub", url: "https://github.com/reimbazz" },
 ];
 
 function lerTemaSalvo() {
@@ -60,9 +66,18 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className="footer">
-        <div className="container">
-          Dados: Banco Central do Brasil (SGS) e Frankfurter API, para BRL/CNY
-          (ver Metodologia) — não constitui recomendação de investimento.
+        <div className="container footer__conteudo">
+          <span>
+            Dados: Banco Central do Brasil (SGS) e Frankfurter API, para BRL/CNY
+            (ver Metodologia) — não constitui recomendação de investimento.
+          </span>
+          <nav className="footer__redes" aria-label="Redes do autor">
+            {REDES.map((rede) => (
+              <a key={rede.rotulo} href={rede.url} target="_blank" rel="noopener noreferrer">
+                {rede.rotulo}
+              </a>
+            ))}
+          </nav>
         </div>
       </footer>
     </>

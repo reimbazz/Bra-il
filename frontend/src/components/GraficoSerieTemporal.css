@@ -1,0 +1,17 @@
+.grafico-temporal--zoom {
+  cursor: crosshair;
+  user-select: none;
+}
+
+.grafico-temporal__dica {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Em toque não existe arraste sobre o gráfico — só os botões de período. */
+@media (hover: none) {
+  .grafico-temporal__dica {
+    display: none;
+  }
+}

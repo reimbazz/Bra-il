@@ -27,7 +27,10 @@ O schema real no Postgres é exatamente `staging`/`intermediate`/`marts`
   equivalente mensal antes de comparar com o IPCA — ver comentário no SQL
   do modelo; a skill `04-modeling` sugere "Selic − IPCA" em linguagem
   solta, mas subtrair direto misturaria % a.a. com % mensal)
-- `mart_indicadores_diarios`, `mart_cambio_base100`, `mart_juro_real_vs_cambio`
+- `int_cambio_fim_de_mes` — última cotação de cada moeda no mês (base dos marts mensais)
+- `mart_indicadores_diarios`, `mart_cambio_base100`, `mart_juro_real_vs_cambio`,
+  `mart_juros_inflacao` (Selic x IPCA 12 meses), `mart_poder_de_compra`
+  (índice de preços acumulado x câmbio de fim de mês)
 
 Todo modelo de mart/intermediate com granularidade de série temporal tem
 `not_null`, `unique` (ou `dbt_utils.unique_combination_of_columns` nos

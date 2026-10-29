@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { buscarJuroRealVsCambio } from "../services/api.js";
+import { buscarJurosInflacao } from "../services/api.js";
 
-/** Busca `marts.mart_juro_real_vs_cambio` (juro real mensal x câmbio de fim de mês). */
-export function useJuroRealVsCambio({ dataInicio, dataFim } = {}) {
+/** Busca `marts.mart_juros_inflacao` (Selic meta x IPCA acumulado em 12 meses). */
+export function useJurosInflacao({ dataInicio, dataFim } = {}) {
   const [dados, setDados] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
@@ -13,7 +13,7 @@ export function useJuroRealVsCambio({ dataInicio, dataFim } = {}) {
     setCarregando(true);
     setErro(null);
 
-    buscarJuroRealVsCambio({ dataInicio, dataFim })
+    buscarJurosInflacao({ dataInicio, dataFim })
       .then((resultado) => {
         if (!cancelado) setDados(resultado);
       })

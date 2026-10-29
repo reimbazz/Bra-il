@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { buscarCorrelacao } from "../services/api.js";
+import { buscarPoderDeCompra } from "../services/api.js";
 
-/** Busca a correlação de Pearson por moeda (calculada no Postgres, ver api/routers/indicadores.py). */
-export function useCorrelacao() {
+/** Busca `marts.mart_poder_de_compra` (índice de preços acumulado x câmbio de fim de mês). */
+export function usePoderDeCompra({ dataInicio, dataFim } = {}) {
   const [dados, setDados] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
@@ -13,7 +13,7 @@ export function useCorrelacao() {
     setCarregando(true);
     setErro(null);
 
-    buscarCorrelacao()
+    buscarPoderDeCompra({ dataInicio, dataFim })
       .then((resultado) => {
         if (!cancelado) setDados(resultado);
       })
@@ -27,7 +27,7 @@ export function useCorrelacao() {
     return () => {
       cancelado = true;
     };
-  }, []);
+  }, [dataInicio, dataFim]);
 
   return { dados, carregando, erro };
 }

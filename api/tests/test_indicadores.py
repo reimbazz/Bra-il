@@ -93,6 +93,47 @@ def test_juro_real_vs_cambio_caminho_principal(executar_query_mock, client: Test
 
 
 @patch("api.routers.indicadores.executar_query")
+def test_juros_inflacao_caminho_principal(executar_query_mock, client: TestClient):
+    executar_query_mock.return_value = [
+        {
+            "mes": "2022-08-01",
+            "selic_meta_pct_aa": 13.75,
+            "ipca_mensal_pct": -0.36,
+            "ipca_12m_pct": 8.73,
+            "juro_real_12m_pct": 4.62,
+        }
+    ]
+
+    resposta = client.get("/api/juros-inflacao?data_inicio=2022-01-01")
+
+    assert resposta.status_code == 200
+    assert resposta.json()[0]["ipca_12m_pct"] == 8.73
+    sql, parametros = executar_query_mock.call_args[0]
+    assert "marts.mart_juros_inflacao WHERE mes >= %s" in sql
+    assert parametros == (date(2022, 1, 1),)
+
+
+@patch("api.routers.indicadores.executar_query")
+def test_poder_de_compra_aceita_cambio_ausente(executar_query_mock, client: TestClient):
+    """CNY composto começa depois do IPCA — mês sem câmbio vem null, não quebra o schema."""
+    executar_query_mock.return_value = [
+        {
+            "mes": "2015-01-01",
+            "ipca_mensal_pct": 1.24,
+            "indice_ipca": 101.24,
+            "cambio_brl_usd_fim_de_mes": 2.66,
+            "cambio_brl_eur_fim_de_mes": 3.0,
+            "cambio_brl_cny_fim_de_mes": None,
+        }
+    ]
+
+    resposta = client.get("/api/poder-de-compra")
+
+    assert resposta.status_code == 200
+    assert resposta.json()[0]["cambio_brl_cny_fim_de_mes"] is None
+
+
+@patch("api.routers.indicadores.executar_query")
 def test_erro_no_banco_nao_vaza_detalhe_da_excecao(executar_query_mock):
     """Caso de erro (skill 05): banco fora do ar não pode virar stack trace pro cliente."""
     executar_query_mock.side_effect = Exception("connection refused: senha-nao-deveria-vazar")

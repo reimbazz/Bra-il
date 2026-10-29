@@ -5,12 +5,12 @@ import "./ChartTooltip.css";
  * série secundário, marcador é um traço da cor da série (não uma caixa
  * cheia) — ver skill dataviz, references/interaction.md.
  */
-export function ChartTooltip({ active, payload, label, formatarValor, rotulos = {} }) {
+export function ChartTooltip({ active, payload, label, formatarValor, formatarRotulo, rotulos = {} }) {
   if (!active || !payload?.length) return null;
 
   return (
     <div className="chart-tooltip">
-      <div className="chart-tooltip__data">{label}</div>
+      <div className="chart-tooltip__data">{formatarRotulo ? formatarRotulo(label) : label}</div>
       {payload.map((entrada) => (
         <div className="chart-tooltip__linha" key={entrada.dataKey}>
           <span

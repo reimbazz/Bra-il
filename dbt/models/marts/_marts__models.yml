@@ -35,3 +35,39 @@ models:
         tests: [not_null, unique]
       - name: juro_real_mensal_pct
         tests: [not_null]
+
+  - name: mart_juros_inflacao
+    description: >
+      Selic meta e IPCA acumulado em 12 meses (ambos % a.a.), com o juro real
+      simplificado (Fisher). Só meses com 12 meses completos de IPCA.
+    columns:
+      - name: mes
+        tests: [not_null, unique]
+      - name: ipca_12m_pct
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -10
+                max_value: 50
+      - name: juro_real_12m_pct
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -30
+                max_value: 30
+
+  - name: mart_poder_de_compra
+    description: >
+      Índice de preços acumulado (IPCA, fim de mês) ao lado do câmbio de fim
+      de mês de cada moeda. O rebase para o mês escolhido acontece no frontend.
+    columns:
+      - name: mes
+        tests: [not_null, unique]
+      - name: indice_ipca
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0

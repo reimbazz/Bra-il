@@ -51,6 +51,27 @@ class JuroRealVsCambio(BaseModel):
     cambio_brl_cny_fim_de_mes: float | None = None
 
 
+class JurosInflacao(BaseModel):
+    """Uma linha de `marts.mart_juros_inflacao` — Selic x IPCA 12 meses, ambos % a.a."""
+
+    mes: date
+    selic_meta_pct_aa: float
+    ipca_mensal_pct: float
+    ipca_12m_pct: float
+    juro_real_12m_pct: float
+
+
+class PoderDeCompra(BaseModel):
+    """Uma linha de `marts.mart_poder_de_compra` — índice de preços e câmbio no fim do mês."""
+
+    mes: date
+    ipca_mensal_pct: float
+    indice_ipca: float
+    cambio_brl_usd_fim_de_mes: float | None = None
+    cambio_brl_eur_fim_de_mes: float | None = None
+    cambio_brl_cny_fim_de_mes: float | None = None
+
+
 class CorrelacaoMoeda(BaseModel):
     """Correlação de Pearson entre juro real mensal e câmbio de fim de mês.
 

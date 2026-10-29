@@ -12,6 +12,8 @@ nunca ingere nem transforma dado (ver ADR 0005 e 0006).
 | `GET /api/indicadores/diarios` | `mart_indicadores_diarios` | `data_inicio`, `data_fim` |
 | `GET /api/cambio/base100` | `mart_cambio_base100` | `moeda` (repetível: `?moeda=USD&moeda=EUR`), `data_inicio`, `data_fim` |
 | `GET /api/juro-real-vs-cambio` | `mart_juro_real_vs_cambio` | `data_inicio`, `data_fim` |
+| `GET /api/juros-inflacao` | `mart_juros_inflacao` | `data_inicio`, `data_fim` |
+| `GET /api/poder-de-compra` | `mart_poder_de_compra` | `data_inicio`, `data_fim` |
 | `GET /api/correlacao` | `mart_juro_real_vs_cambio` (agregado) | nenhum — sempre as 3 moedas |
 
 `moeda` é validado contra o enum `USD`/`EUR`/`CNY` (ADR 0004) — valor fora
@@ -23,7 +25,7 @@ disso devolve `422` antes de qualquer query rodar.
 - `config.py` — lê `DATABASE_URL_READONLY` e `ALLOWED_ORIGINS` do ambiente
 - `db.py` — conexão nova por chamada (padrão serverless — cada invocação é isolada)
 - `schemas.py` — modelos Pydantic de resposta, um por mart
-- `routers/indicadores.py` — os 3 endpoints de dado
+- `routers/indicadores.py` — os endpoints de dado
 
 ## Setup local
 
