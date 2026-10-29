@@ -8,7 +8,7 @@ import { Spinner } from "../components/Spinner.jsx";
 import { StatTile } from "../components/StatTile.jsx";
 import { useIndicadoresDiarios } from "../hooks/useIndicadoresDiarios.js";
 import { useJurosInflacao } from "../hooks/useJurosInflacao.js";
-import { formatarMesAno, inicioDoPeriodo } from "../utils/datas.js";
+import { inicioDoPeriodo } from "../utils/datas.js";
 import { formatarNumero } from "../utils/formatarNumero.js";
 import { ultimoValorValido } from "../utils/ultimoValorValido.js";
 
@@ -44,7 +44,6 @@ export function VisaoGeral() {
 
   const linhas = indicadores.dados;
   const ultimoMes = jurosInflacao.dados.at(-1);
-  const referenciaMensal = ultimoMes ? `12 meses até ${formatarMesAno(ultimoMes.mes)}` : null;
 
   return (
     <>
@@ -62,40 +61,34 @@ export function VisaoGeral() {
           label="Selic meta"
           valor={formatarNumero(ultimoValorValido(linhas, "selic_meta_pct_aa"))}
           unidade="% a.a."
-          descricao="Taxa básica de juros da economia, definida pelo Banco Central"
         />
         <StatTile
           label="Inflação (IPCA)"
           valor={ultimoMes ? formatarNumero(ultimoMes.ipca_12m_pct) : null}
           unidade="%"
-          descricao={referenciaMensal ? `Alta dos preços nos ${referenciaMensal}` : null}
         />
         <StatTile
           label="Juro real"
           valor={ultimoMes ? formatarNumero(ultimoMes.juro_real_12m_pct) : null}
           unidade="% a.a."
-          descricao="Quanto a Selic rende acima da inflação"
         />
         <StatTile
           label="Dólar"
           prefixo="R$"
           valor={formatarNumero(ultimoValorValido(linhas, "cambio_brl_usd"))}
           corDestaque="var(--color-series-usd)"
-          descricao="Preço de 1 dólar americano"
         />
         <StatTile
           label="Euro"
           prefixo="R$"
           valor={formatarNumero(ultimoValorValido(linhas, "cambio_brl_eur"))}
           corDestaque="var(--color-series-eur)"
-          descricao="Preço de 1 euro"
         />
         <StatTile
           label="Yuan"
           prefixo="R$"
           valor={formatarNumero(ultimoValorValido(linhas, "cambio_brl_cny"))}
           corDestaque="var(--color-series-cny)"
-          descricao="Preço de 1 yuan chinês"
         />
       </section>
 

@@ -80,14 +80,15 @@
 
 .footer__redes {
   display: flex;
-  gap: 16px;
-  font-size: 13px;
+  gap: 14px;
 }
 
-.footer__redes a {
-  text-decoration: none;
+.footer__rede {
+  display: inline-flex;
+  color: var(--color-text-muted);
+  transition: color 0.15s;
 }
 
-.footer__redes a:hover {
-  text-decoration: underline;
+.footer__rede:hover {
+  color: var(--color-brand);
 }
